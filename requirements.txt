@@ -1,0 +1,9 @@
+get==2019.4.13
+post==2019.4.13
+public==2019.4.13
+py-translate==1.0.3
+pyTelegramBotAPI==3.6.6
+query-string==2019.4.13
+request==2019.4.13
+requests==2.7.0
+six==1.12.0
