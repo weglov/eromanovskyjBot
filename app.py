@@ -45,7 +45,7 @@ def send_text(message):
 
     if message.text.lower() in ["-", "пас", "я пас"]:
         bot.send_message(chat_id, pass_exceptions())
-    elif user in config.users:
+    elif user in config.users and len(text) > 10:
         translate_text = translate(text, message.date)
         if translate_text:
             bot.send_message(chat_id, translate_text)
