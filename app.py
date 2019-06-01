@@ -5,17 +5,13 @@ import os
 from config import Config
 
 config = Config()
-
 bot = telebot.TeleBot(os.environ.get(config.env_key, None))
-LANG_TO = 'be'
-LANG_FROM = 'ru'
-TIME_OFFSET = 120  # секунд до повторной отправки (5мин)
 
 
 def translate(text, date):
-    if date - config.old_date > TIME_OFFSET:
+    if date - config.old_date > config.time_offset:
         try:
-            translate_message = translator(LANG_FROM, LANG_TO, text)
+            translate_message = translator(config.lang_from, config.lang_to, text)
             return translate_message[0]
         except:
             print('Too many Requests')
