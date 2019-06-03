@@ -1,3 +1,10 @@
+# virtualenv
 venv
+env
+
+# idea
+.vscode
 .idea
+
+# files
 *.pyc
