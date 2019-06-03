@@ -56,10 +56,15 @@ def translate(text):
         return
 
 
+@bot.message_handler(commands=['punch'])
+def send_punch(message):
+    bot.send_message(message.chat.id, random.choice(config.phrases))
+
+
 @bot.message_handler(content_types=['text'])
 def send_text(message):
     config.period.punch_count += 1
-    config.period.translate_count += 1
+    config.period.translate_count += 1 if message.from_user.username in config.users else 0
 
     type_ = spot_answer_type(message)
 
@@ -73,7 +78,8 @@ def send_text(message):
     elif type_ == message_types.skip:
         mess = SKIP_MESS
 
-    return bot.send_message(message.chat.id, mess) if mess else None
+    if mess:
+        bot.send_message(message.chat.id, mess)
 
 
 if __name__ == "__main__":
