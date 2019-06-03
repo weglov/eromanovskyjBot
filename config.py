@@ -33,7 +33,7 @@ class Config:
     env_key = 'TELE_KEY'
     lang_to = 'be'
     lang_from = 'ru'
-    offset = 180
+    offset = 300
     message_length = 15
     users = ['eromanovskyj', 'dm_melnikov']
     phrases = PHRASES
