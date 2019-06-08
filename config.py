@@ -18,7 +18,9 @@ PHRASES = [
     "ебать дэпо дорогой",
     "sooooooqqaaaaaaaa",
     "парни, я же говорил что мы даже лучше общаться стали",
-    "нормас"
+    "нормас",
+    "так я напоминаю: https://www.youtube.com/watch?v=SHu8GSYIpwk",
+    "так я напоминаю: https://www.youtube.com/watch?v=VhyaaPUeaYQ"
 ]
 
 
