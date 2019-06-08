@@ -58,7 +58,7 @@ def translate(text):
 
 @bot.message_handler(commands=['punch'])
 def send_punch(message):
-    bot.send_message(message.chat.id, random.choice(config.phrases).capitalize())
+    bot.send_message(message.chat.id, random.choice(config.phrases))
 
 
 @bot.message_handler(content_types=['text'])
