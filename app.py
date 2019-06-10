@@ -59,8 +59,6 @@ def translate(text):
 @bot.message_handler(commands=['punch'])
 def send_punch(message):
     phrase = random.choice(config.phrases)
-    if 'https://' not in phrase:
-        phrase = phrase.capitalize()
 
     bot.send_message(message.chat.id, phrase)
 
