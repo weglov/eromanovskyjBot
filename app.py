@@ -8,9 +8,10 @@ from collections import namedtuple
 
 config = Config()
 bot = telebot.TeleBot(os.environ.get(config.env_key, None))
+fact_ending = os.environ.get(config.env_fact_end, None)
 
-message_types = namedtuple('MessageType', 'translate, punch, skip')(
-    'translate', 'punch', 'skip')
+message_types = namedtuple('MessageType', 'translate, punch, skip, fact')(
+    'translate', 'punch', 'skip', 'fact')
 
 SKIP_MESS = "Парни сори, я пас, сегодня я каблук"
 
@@ -20,6 +21,7 @@ def _is_translate_time(message):
         config.period.translate_count > config.period.translate_period,
         message.date - config.period.last_message_data > config.offset,
         len(message.text) > config.message_length,
+        not message.text.startswith('http'),
     ]):
         config.period.translate_count = 0
         config.period.last_message_data = message.date
@@ -38,11 +40,20 @@ def _is_punch_time(message):
     return False
 
 
+def _is_fact_time(message):
+    return message.date - config.period.last_fact_data > config.long_offset
+
+
 def spot_answer_type(message):
-    if message.text.lower() in ["-", "пас", "я пас"]:
+    text = message.text.lower()
+    if text in ["-", "пас", "я пас"]:
         return message_types.skip
 
+    # logic only for special users
     elif message.from_user.username in config.users:
+        if any([word in text for word in ('беларус', 'минск')]) and _is_fact_time(message):
+            return message_types.fact
+
         return message_types.translate if _is_translate_time(message) else None
 
     return message_types.punch if _is_punch_time(message) else None
@@ -56,11 +67,24 @@ def translate(text):
         return
 
 
+def get_fact():
+    fact = random.choice(config.facts)
+
+    return '{} (c) {}'.format(fact, fact_ending)
+
+
 @bot.message_handler(commands=['punch'])
 def send_punch(message):
-    phrase = random.choice(config.phrases)
+    phrase = random.choice(config.phrases).capitalize()
 
     bot.send_message(message.chat.id, phrase)
+
+
+@bot.message_handler(commands=['fact'])
+def send_fact(message):
+    fact = get_fact()
+
+    bot.send_message(message.chat.id, fact)
 
 
 @bot.message_handler(content_types=['text'])
@@ -71,6 +95,9 @@ def send_text(message):
     type_ = spot_answer_type(message)
 
     mess = None
+    if type_ == message_types.fact:
+        bot.reply_to(message, get_fact())
+
     if type_ == message_types.translate:
         mess = translate(message.text)
 
