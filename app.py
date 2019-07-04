@@ -80,6 +80,12 @@ def send_punch(message):
     bot.send_message(message.chat.id, phrase)
 
 
+@bot.message_handler(commands=['sayhialbert'])
+def send_hi(message):
+    sticker = random.choice(config.stickers)
+    bot.send_sticker(message.chat.id, sticker)
+
+
 @bot.message_handler(commands=['fact'])
 def send_fact(message):
     fact = fact_type()

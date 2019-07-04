@@ -39,6 +39,12 @@ FACTS = [
     'Все так, но я хочу напомнить что в Беларуси Ниссан алмеры в каршеринге'
 ]
 
+HI_STICKERS = [
+    'CAADAgAD-AADsJjjAzEWF6AJrFcFAg',
+    'CAADAgADaQAD4aRlBU-4f77gfg6wAg',
+    'CAADAgADIwUAAmIxvRMwoI6RATWpZgI'
+]
+
 class PeriodConfig:
     translate_period = 5
     translate_count = 0
@@ -61,6 +67,7 @@ class Config:
     long_offset = DELAY_TIME
     message_length = 15
     users = ['eromanovskyj', 'dm_melnikov']
+    period = PeriodConfig
+    stickers = HI_STICKERS
     phrases = PHRASES
     facts = FACTS
-    period = PeriodConfig
