@@ -97,7 +97,6 @@ def send_text(message):
     mess = None
     if type_ == message_types.fact:
         bot.reply_to(message, get_fact())
-        return
 
     if type_ == message_types.translate:
         mess = translate(message.text)
