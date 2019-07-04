@@ -40,11 +40,11 @@ FACTS = [
 ]
 
 class PeriodConfig:
-    translate_period = 3
+    translate_period = 5
     translate_count = 0
     last_message_data = dt.now().timestamp()
 
-    punch_period = 15
+    punch_period = 10
     punch_count = 0
     last_punch_data = dt.now().timestamp()
 
