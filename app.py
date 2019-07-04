@@ -51,7 +51,7 @@ def spot_answer_type(message):
 
     # logic only for special users
     elif message.from_user.username in config.users:
-        if config.trigger_word in text and _is_fact_time(message):
+        if any([word in text for word in ('беларус', 'минск')]) and _is_fact_time(message):
             return message_types.fact
 
         return message_types.translate if _is_translate_time(message) else None
@@ -67,7 +67,7 @@ def translate(text):
         return
 
 
-def fact_type():
+def get_fact():
     fact = random.choice(config.facts)
 
     return '{} (c) {}'.format(fact, fact_ending)
@@ -82,7 +82,7 @@ def send_punch(message):
 
 @bot.message_handler(commands=['fact'])
 def send_fact(message):
-    fact = fact_type()
+    fact = get_fact()
 
     bot.send_message(message.chat.id, fact)
 
@@ -95,6 +95,10 @@ def send_text(message):
     type_ = spot_answer_type(message)
 
     mess = None
+    if type_ == message_types.fact:
+        bot.reply_to(message, get_fact())
+        return
+
     if type_ == message_types.translate:
         mess = translate(message.text)
 
@@ -103,11 +107,6 @@ def send_text(message):
 
     elif type_ == message_types.skip:
         mess = SKIP_MESS
-
-    elif type_ == message_types.fact:
-        mess = fact_type()
-        bot.reply_to(message, mess)
-        return
 
     if mess:
         bot.send_message(message.chat.id, mess)

@@ -56,7 +56,6 @@ class Config:
     env_fact_end = 'FACT_KEY'
     lang_to = 'be'
     lang_from = 'ru'
-    trigger_word = 'беларус'
     offset = 300 # 5 min
     long_offset = DELAY_TIME
     message_length = 15
