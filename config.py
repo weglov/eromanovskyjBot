@@ -1,5 +1,7 @@
 from datetime import datetime as dt
 
+DELAY_TIME = 43200 # 12 hours
+
 PHRASES = [
     'пернул мозгом',
     'да, ништяк',
@@ -17,7 +19,8 @@ PHRASES = [
     'принял понял, на хую пумпонил',
     'ебать дэпо дорогой',
     'sooooooqqaaaaaaaa',
-    'парни, я же говорил что мы даже лучше общаться стали'
+    'парни, я же говорил что мы даже лучше общаться стали',
+    'нормас'
 ]
 
 # Disclaimer: below are humorous stereotypes, in fact, we love and respect Belarus ❤️
@@ -33,7 +36,7 @@ FACTS = [
     'Интересно, а не подскажешь сколько белорус может прожить без картошки?',
     'Ты сильно заблуждаешься считая что Земля на самом деле имеет форму драника.',
     'Да, а еще Бульба — суть белоруса, его плоть, кровь и сознание.',
-    'Все так, но я хочу напомнить что в Беларуси Ниссан алмеры в каршеринге',
+    'Все так, но я хочу напомнить что в Беларуси Ниссан алмеры в каршеринге'
 ]
 
 class PeriodConfig:
@@ -45,7 +48,7 @@ class PeriodConfig:
     punch_count = 0
     last_punch_data = dt.now().timestamp()
 
-    last_fact_data = dt.now().timestamp() - 43200
+    last_fact_data = dt.now().timestamp() - DELAY_TIME
 
 
 class Config:
@@ -55,7 +58,7 @@ class Config:
     lang_from = 'ru'
     trigger_word = 'беларус'
     offset = 300 # 5 min
-    long_offset = 43200 # 12 hours
+    long_offset = DELAY_TIME
     message_length = 15
     users = ['eromanovskyj', 'dm_melnikov']
     phrases = PHRASES
