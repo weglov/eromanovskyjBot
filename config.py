@@ -1,6 +1,6 @@
 from datetime import datetime as dt
 
-DELAY_TIME = 43200 # 12 hours
+DELAY_TIME = 43200   # 12 hours
 
 PHRASES = [
     'пернул мозгом',
@@ -45,6 +45,7 @@ HI_STICKERS = [
     'CAADAgADIwUAAmIxvRMwoI6RATWpZgI'
 ]
 
+
 class PeriodConfig:
     translate_period = 5
     translate_count = 0
@@ -60,12 +61,18 @@ class PeriodConfig:
 class Config:
     env_key = 'TELE_KEY'
     env_fact_end = 'FACT_KEY'
+
     lang_to = 'be'
     lang_from = 'ru'
-    offset = 300 # 5 min
+
+    offset = 300   # 5 min
     long_offset = DELAY_TIME
-    message_length = 15
+
     users = ['eromanovskyj', 'dm_melnikov']
+    skip_mess = "Парни сори, я пас, сегодня я каблук"
+    skip_phrases = ["-", "пас", "я пас"]
+    message_length = 15
+
     period = PeriodConfig
     stickers = HI_STICKERS
     phrases = PHRASES
