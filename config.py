@@ -75,7 +75,7 @@ class Config:
     users = ['eromanovskyj', 'dm_melnikov']
     skip_mess = "Парни сори, я пас, сегодня я каблук"
     skip_triger = ("-", "пас", "я пас")
-    fact_triger = ('беларус', 'минск')
+    fact_triger = ('беларус', 'минск', 'лукашенк', 'картош', 'картоха')
     pubg_mess = '@all mb PUBG?'
     message_length = 15
 

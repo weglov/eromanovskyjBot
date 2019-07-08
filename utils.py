@@ -42,7 +42,7 @@ def spot_answer_type(message):
     if text in config.skip_triger:
         return message_types.skip
 
-    elif _is_punch_time(message):
+    elif _is_pubg_time(message):
         return message_types.pubg
 
     # logic only for special users
