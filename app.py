@@ -19,7 +19,6 @@ bot = telebot.TeleBot(os.environ.get(config.env_key, None))
 @bot.message_handler(commands=['punch'])
 def send_punch(message):
     phrase = random.choice(config.phrases).capitalize()
-
     bot.send_message(message.chat.id, phrase)
 
 
@@ -32,8 +31,12 @@ def send_hi(message):
 @bot.message_handler(commands=['fact'])
 def send_fact(message):
     fact = get_fact()
-
     bot.send_message(message.chat.id, fact)
+
+
+@bot.message_handler(commands=['pubg'])
+def send_pubg_request(message):
+    bot.send_message(message.chat.id, config.pubg_mess)
 
 
 @bot.message_handler(content_types=['text'])
@@ -46,6 +49,7 @@ def send_text(message):
     mess = None
     if type_ == message_types.fact:
         bot.reply_to(message, get_fact())
+        reset_period(message.date)
 
     if type_ == message_types.translate:
         mess = translate(message.text)
@@ -55,6 +59,9 @@ def send_text(message):
 
     elif type_ == message_types.skip:
         mess = config.skip_mess
+
+    elif type_ == message_types.pubg:
+        mess = config.pubg_mess
 
     if mess:
         bot.send_message(message.chat.id, mess)
