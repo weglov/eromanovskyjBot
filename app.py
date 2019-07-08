@@ -4,7 +4,6 @@ import os
 from config import Config
 
 from utils import (
-    SKIP_MESS,
     get_fact,
     message_types,
     reset_period,
@@ -55,7 +54,7 @@ def send_text(message):
         mess = random.choice(config.phrases)
 
     elif type_ == message_types.skip:
-        mess = SKIP_MESS
+        mess = config.skip_mess
 
     if mess:
         bot.send_message(message.chat.id, mess)

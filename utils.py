@@ -11,8 +11,6 @@ fact_ending = os.environ.get(config.env_fact_end, None)
 message_types = namedtuple('MessageType', 'translate, punch, skip, fact')(
     'translate', 'punch', 'skip', 'fact')
 
-SKIP_MESS = "Парни сори, я пас, сегодня я каблук"
-
 
 def _is_translate_time(message):
     if all([
@@ -40,7 +38,7 @@ def _is_fact_time(message):
 
 def spot_answer_type(message):
     text = message.text.lower()
-    if text in ["-", "пас", "я пас"]:
+    if text in config.skip_phrases:
         return message_types.skip
 
     # logic only for special users

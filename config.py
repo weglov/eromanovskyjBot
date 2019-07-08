@@ -61,12 +61,18 @@ class PeriodConfig:
 class Config:
     env_key = 'TELE_KEY'
     env_fact_end = 'FACT_KEY'
+
     lang_to = 'be'
     lang_from = 'ru'
+
     offset = 300   # 5 min
     long_offset = DELAY_TIME
-    message_length = 15
+
     users = ['eromanovskyj', 'dm_melnikov']
+    skip_mess = "Парни сори, я пас, сегодня я каблук"
+    skip_phrases = ["-", "пас", "я пас"]
+    message_length = 15
+
     period = PeriodConfig
     stickers = HI_STICKERS
     phrases = PHRASES
