@@ -2,6 +2,7 @@ import random
 from translate import translator
 import os
 from config import Config, message_types
+from telebot import types
 
 
 config = Config()
@@ -71,3 +72,23 @@ def get_fact():
 def reset_period(date):
     config.period.punch_count = config.period.translate_count = 0
     config.period.last_message_data = config.period.last_punch_data = date
+
+
+def get_markup_pubg():
+    markup = types.InlineKeyboardMarkup()
+
+    row = [
+        types.InlineKeyboardButton('Да', callback_data='yes'),
+        types.InlineKeyboardButton('Нет', callback_data='no'),
+    ]
+
+    markup.row(*row)
+    return markup
+
+
+def update_text(call):
+    text = call.message.text + '\n\n'
+    user = call.from_user.first_name or "@" + call.from_user.username
+    because = random.choice(config.because_i_am[call.data])
+
+    return text + f"{user}: Я {'пас' if call.data == 'no' else 'за'} потому что я {because}"

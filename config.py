@@ -72,12 +72,20 @@ class Config:
     offset = 300   # 5 min
     long_offset = DELAY_TIME
 
-    users = ['eromanovskyj', 'dm_melnikov']
-    skip_mess = "Парни сори, я пас, сегодня я каблук"
-    skip_triger = ("-", "пас", "я пас")
+    users = ('eromanovskyj', 'dm_melnikov')
+    skip_mess = 'Парни сори, я пас, сегодня я каблук'
+    skip_triger = ('eromanovskyj-', 'пас', 'я пас')
     fact_triger = ('беларус', 'минск', 'лукашенк', 'картош', 'картоха')
-    pubg_mess = '@all mb PUBG?'
+    pubg_mess = 'Ну что пасаны может катку в PUBG'
     message_length = 15
+
+    because_i_am = {
+        'no': ('пидор', 'белорус', 'каблук', 'лох', 'армянин', 'яндексоид'),
+        'yes': ('белорус', 'армянин', 'яндексоид', 'красава', 'мужик', 'лучший'),
+    }
+
+    users_count = 3
+    press_button_users = []
 
     period = PeriodConfig
     stickers = HI_STICKERS

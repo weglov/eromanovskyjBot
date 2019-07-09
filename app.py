@@ -5,10 +5,12 @@ from config import Config
 
 from utils import (
     get_fact,
+    get_markup_pubg,
     message_types,
     reset_period,
     spot_answer_type,
     translate,
+    update_text,
 )
 
 
@@ -36,7 +38,28 @@ def send_fact(message):
 
 @bot.message_handler(commands=['pubg'])
 def send_pubg_request(message):
-    bot.send_message(message.chat.id, config.pubg_mess)
+    title = translate(
+        config.pubg_mess) if message.from_user.username in config.users else config.pubg_mess
+
+    bot.send_message(message.chat.id, title, reply_markup=get_markup_pubg())
+
+
+@bot.callback_query_handler(func=lambda call: call.data in ['yes', 'no'])
+def pagination(call):
+    if call.from_user.username in config.press_button_users:
+        return
+
+    config.press_button_users.append(call.from_user.username)
+    is_all = len(config.press_button_users) == config.users_count
+    config.press_button_users = [] if is_all else config.press_button_users
+
+    bot.edit_message_text(
+        update_text(call),
+        call.from_user.id,
+        call.message.message_id,
+        reply_markup=None if is_all else get_markup_pubg(),
+    )
+    bot.answer_callback_query(call.id, text="")
 
 
 @bot.message_handler(content_types=['text'])
