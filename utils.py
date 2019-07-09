@@ -35,7 +35,7 @@ def _is_fact_time(message):
 
 def _is_pubg_time(message):
     ''' It is black magick, but if this return `True` we need to play pubg!!! '''
-    return int(message.data) % random.randint(10, 100) == random.randint(0, 5)
+    return int(message.date) % random.randint(10, 100) == random.randint(0, 5)
 
 
 def spot_answer_type(message):
