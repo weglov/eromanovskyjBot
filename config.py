@@ -76,7 +76,7 @@ class Config:
     skip_mess = 'Парни сори, я пас, сегодня я каблук'
     skip_triger = ('eromanovskyj-', 'пас', 'я пас')
     fact_triger = ('беларус', 'минск', 'лукашенк', 'картош', 'картоха')
-    pubg_mess = 'Ну что пасаны может катку в PUBG'
+    pubg_mess = 'Ну что пасаны может катку в PUBG?'
     message_length = 15
 
     because_i_am = {
