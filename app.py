@@ -39,7 +39,7 @@ def send_fact(message):
 
 @bot.message_handler(commands=['pubg'])
 def send_pubg_request(message):
-    if message.chat.type != 'group':
+    if message.chat.type == 'private':
         return
 
     chat_id = message.chat.id
