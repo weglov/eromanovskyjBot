@@ -21,7 +21,8 @@ PHRASES = [
     'ебать дэпо дорогой',
     'sooooooqqaaaaaaaa',
     'парни, я же говорил что мы даже лучше общаться стали',
-    'нормас'
+    'нормас',
+    'короче вам жопы надо подставлять а не ботов разрабатывать'
 ]
 
 # Disclaimer: below are humorous stereotypes, in fact, we love and respect Belarus ❤️
