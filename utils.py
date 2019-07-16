@@ -33,18 +33,10 @@ def _is_fact_time(message):
     return message.date - config.period.last_fact_data > config.long_offset
 
 
-def _is_pubg_time(message):
-    ''' It is black magick, but if this return `True` we need to play pubg!!! '''
-    return int(message.date) % random.randint(10, 100) == random.randint(0, 5)
-
-
 def spot_answer_type(message):
     text = message.text.lower()
     if text in config.skip_triger:
         return message_types.skip
-
-    elif _is_pubg_time(message):
-        return message_types.pubg
 
     # logic only for special users
     elif message.from_user.username in config.users:
@@ -72,6 +64,19 @@ def get_fact():
 def reset_period(date):
     config.period.punch_count = config.period.translate_count = 0
     config.period.last_message_data = config.period.last_punch_data = date
+
+
+def check_press_button_user(call):
+    chat_id = call.message.chat.id
+
+    press_users = config.press_button[chat_id]['users']
+    if call.from_user.username in press_users:
+        return True, False
+
+    press_users.append(call.from_user.username)
+    is_all = len(press_users) == config.users_count
+
+    return False, is_all
 
 
 def get_markup_pubg():

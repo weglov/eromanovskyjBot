@@ -46,8 +46,8 @@ HI_STICKERS = [
     'CAADAgADIwUAAmIxvRMwoI6RATWpZgI'
 ]
 
-message_types = namedtuple('MessageType', 'translate, punch, skip, fact, pubg')(
-    'translate', 'punch', 'skip', 'fact', 'pubg')
+message_types = namedtuple('MessageType', 'translate, punch, skip, fact')(
+    'translate', 'punch', 'skip', 'fact')
 
 
 class PeriodConfig:
@@ -85,7 +85,7 @@ class Config:
     }
 
     users_count = 3
-    press_button_users = []
+    press_button = {}
 
     period = PeriodConfig
     stickers = HI_STICKERS
