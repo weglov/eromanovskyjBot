@@ -85,7 +85,7 @@ class Config:
     }
 
     users_count = 3
-    press_button_users = {}
+    press_button = {}
 
     period = PeriodConfig
     stickers = HI_STICKERS

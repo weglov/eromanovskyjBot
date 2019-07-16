@@ -68,11 +68,6 @@ def reset_period(date):
 
 def check_press_button_user(call):
     chat_id = call.message.chat.id
-    if not config.press_button.get(chat_id, None):
-        config.press_button_users[chat_id] = {
-            'message': call.message.id,
-            'users': []
-        }
 
     press_users = config.press_button[chat_id]['users']
     if call.from_user.username in press_users:
