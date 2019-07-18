@@ -12,6 +12,7 @@ from utils import (
     spot_answer_type,
     translate,
     update_text,
+    with_remove,
 )
 
 
@@ -20,24 +21,28 @@ bot = telebot.TeleBot(os.environ.get(config.env_key, None))
 
 
 @bot.message_handler(commands=['punch'])
+@with_remove(bot)
 def send_punch(message):
     phrase = random.choice(config.phrases).capitalize()
     bot.send_message(message.chat.id, phrase)
 
 
 @bot.message_handler(commands=['sayhialbert'])
+@with_remove(bot)
 def send_hi(message):
     sticker = random.choice(config.stickers)
     bot.send_sticker(message.chat.id, sticker)
 
 
 @bot.message_handler(commands=['fact'])
+@with_remove(bot)
 def send_fact(message):
     fact = get_fact()
     bot.send_message(message.chat.id, fact)
 
 
 @bot.message_handler(commands=['pubg'])
+@with_remove(bot)
 def send_pubg_request(message):
     if message.chat.type == 'private':
         return
