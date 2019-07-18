@@ -21,7 +21,7 @@ def with_remove(bot):
                 try:
                     bot.delete_message(body.chat.id, body.message_id)
                 except Exception:
-                    pass
+                    print(f"Can't remove {body.chat.id} | {body.from_user.username}")
 
             return fn(*args, **kw)
         return wrapper

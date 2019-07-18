@@ -12,7 +12,7 @@ from utils import (
     spot_answer_type,
     translate,
     update_text,
-    with_remove
+    with_remove,
 )
 
 
