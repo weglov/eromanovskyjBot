@@ -13,10 +13,9 @@ def with_remove(bot):
     def decorator_handler(fn):
         def wrapper(*args, **kw):
             body = args[0]
-            text = body.text
 
-            if any([word in text for word in config.remove_commands]):
-                print(f"Triggering remove: {text} | {body.from_user.username}")
+            if '-d' in body.text and body.text.startswith('/'):
+                print(f"Triggering remove: {body.text} | {body.from_user.username}")
 
                 try:
                     bot.delete_message(body.chat.id, body.message_id)

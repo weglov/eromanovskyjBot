@@ -77,7 +77,6 @@ class Config:
     skip_mess = 'Парни сори, я пас, сегодня я каблук'
     skip_triger = ('eromanovskyj-', 'пас', 'я пас')
     fact_triger = ('беларус', 'минск', 'лукашенк', 'картош', 'картоха')
-    remove_commands = ('-r', '-remove', '-d', '-delete')
     pubg_mess = 'Ну что пасаны может катку в PUBG?'
     message_length = 15
 
