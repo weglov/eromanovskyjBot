@@ -97,6 +97,9 @@ def send_text(message):
     if type_ == message_types.translate:
         mess = translate(message.text)
 
+    elif type_ == message_types.fight:
+        mess = config.figth_mess
+
     elif type_ == message_types.punch:
         mess = random.choice(config.phrases)
 

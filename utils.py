@@ -56,6 +56,9 @@ def spot_answer_type(message):
     if text in config.skip_triger:
         return message_types.skip
 
+    elif config.fight_triger in text.split(' '):
+        return message_types.fight
+
     # logic only for special users
     elif message.from_user.username in config.users:
         if any([word in text for word in config.fact_triger]) and _is_fact_time(message):
