@@ -80,7 +80,7 @@ class Config:
     skip_triger = ('eromanovskyj-', 'пас', 'я пас')
     fact_triger = ('беларус', 'минск', 'лукашенк', 'картош', 'картоха')
     fight_triger = 'бой'
-    figth_mess = 'Мой хуй с твоей губой'
+    fight_mess = 'Мой хуй с твоей губой'
     pubg_mess = 'Ну что пасаны может катку в PUBG?'
     message_length = 15
 

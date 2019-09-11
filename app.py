@@ -89,16 +89,20 @@ def send_text(message):
 
     type_ = spot_answer_type(message)
 
-    mess = None
+    mess, replay_mess = None, None
     if type_ == message_types.fact:
-        bot.reply_to(message, get_fact())
+        replay_mess = get_fact()
+
+    elif type_ == message_types.fight:
+        replay_mess = config.fight_mess
+
+    if replay_mess:
+        bot.reply_to(message, replay_mess)
         reset_period(message.date)
+        return
 
     if type_ == message_types.translate:
         mess = translate(message.text)
-
-    elif type_ == message_types.fight:
-        mess = config.figth_mess
 
     elif type_ == message_types.punch:
         mess = random.choice(config.phrases)
