@@ -25,6 +25,7 @@ PHRASES = [
     'нормас',
     'короче вам жопы надо подставлять а не ботов разрабатывать',
     'ну если тебе нужна такая победа',
+    'за пиздеж в рот берешь?',
 ]
 
 # Disclaimer: below are humorous stereotypes, in fact, we love and respect Belarus ❤️
