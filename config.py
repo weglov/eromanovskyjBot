@@ -51,8 +51,8 @@ HI_STICKERS = [
     'CAADAgADIwUAAmIxvRMwoI6RATWpZgI'
 ]
 
-message_types = namedtuple('MessageType', 'translate, punch, skip, fact, fight')(
-    'translate', 'punch', 'skip', 'fact', 'fight')
+message_types = namedtuple('MessageType', 'translate, punch, skip, fact, fight, ping')(
+    'translate', 'punch', 'skip', 'fact', 'fight', 'ping')
 
 
 class PeriodConfig:
@@ -81,10 +81,15 @@ class Config:
     skip_mess = 'Парни сори, я пас, сегодня я каблук'
     skip_triger = ('eromanovskyj-', 'пас', 'я пас')
     fact_triger = ('беларус', 'минск', 'лукашенк', 'картош', 'картоха', 'мiнск', 'минcк', 'минсk')
+
     fight_triger = 'бой'
     fight_mess = 'Мой хуй с твоей губой'
+
     pubg_mess = 'Ну что пасаны может катку в PUBG?'
     message_length = 15
+
+    ping_trigger = ('эд', 'эдос', 'эдик', 'эдуард')
+    ping_mess = '@eromanovskyj'
 
     because_i_am = {
         'no': ('пидор', 'белорус', 'каблук', 'лох', 'армянин', 'яндексоид'),

@@ -59,6 +59,12 @@ def spot_answer_type(message):
     elif config.fight_triger in text.split(' '):
         return message_types.fight
 
+    elif all([
+        message.from_user.username not in config.users,
+        any([word in text.split(' ') for word in config.ping_trigger]),
+    ]):
+        return message_types.ping
+
     # logic only for special users
     elif message.from_user.username in config.users:
         if any([word in text for word in config.fact_triger]) and _is_fact_time(message):

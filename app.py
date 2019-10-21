@@ -110,6 +110,9 @@ def send_text(message):
     elif type_ == message_types.skip:
         mess = config.skip_mess
 
+    elif type_ == message_types.ping:
+        mess = config.ping_mess
+
     if mess:
         bot.send_message(message.chat.id, mess)
         reset_period(message.date)
