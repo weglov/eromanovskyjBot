@@ -54,8 +54,10 @@ def _is_fact_time(message):
     return message.date - config.period.last_fact_data > config.long_offset
 
 
-def _is_comapany_punch_time(message):
-    return message.date - config.period.last_fact_data > config.long_offset
+def _is_comapany_punch_time(message, detect_company):
+    out_of_period = message.date - config.period.last_fact_data > config.long_offset
+
+    return config.last_company_punch != detect_company and out_of_period
 
 
 def _get_company_punch(message):
@@ -63,14 +65,14 @@ def _get_company_punch(message):
 
     for company_key, company in config.company_triger.items():
         if any([word in text for word in company['matches']]):
-            return company
+            return company_key, company
 
-    return None
+    return None, None
 
 
 def spot_answer_type(message):
     text = message.text.lower()
-    _detect_company = _get_company_punch(message)
+    _company_key, _company_items = _get_company_punch(message)
 
     if text in config.skip_triger:
         return message_types.skip, config.skip_mess
@@ -78,8 +80,9 @@ def spot_answer_type(message):
     elif config.fight_triger in text.split(' '):
         return message_types.fight, config.fight_mess, True
 
-    elif _detect_company and _is_comapany_punch_time(message):
-        return message_types.company, _detect_company['punch'], True
+    elif _company_key and _is_comapany_punch_time(message, _company_key):
+        config.last_company_punch = _company_key
+        return message_types.company, _company_items['punch'], True
 
     # logic only for special users
     elif message.from_user.username in config.users:
@@ -108,7 +111,7 @@ def get_fact():
     return f"{fact.capitalize()} (c) {fact_ending}"
 
 
-def reset_period(date, type):
+def reset_period(date):
     config.period.punch_count = config.period.translate_count = 0
     config.period.last_message_data = config.period.last_punch_data = date
 

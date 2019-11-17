@@ -82,6 +82,7 @@ class Config:
     skip_mess = 'Парни сори, я пас, сегодня я каблук'
     skip_triger = ('eromanovskyj-', 'пас', 'я пас')
     fact_triger = ('беларус', 'минск', 'лукашенк', 'картош', 'картоха', 'мiнск', 'минcк', 'минсk')
+    last_company_punch = None
     company_triger = {
         'yandex': {
             'matches': ['яндекс', 'yandex'],
@@ -96,7 +97,7 @@ class Config:
             'punch': 'Панда нахуй док'
         },
         'sber': {
-            'matches': ['сбере', 'сбертех', 'сбербанк', 'sber', 'домклик'],
+            'matches': ['сбере', 'сбертех', 'сбербанк', 'sber', 'домклик', 'сбера'],
             'punch': 'Сбер - где карту открывали, туда и идите'
         },
     }
