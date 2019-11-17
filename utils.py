@@ -1,9 +1,10 @@
-import random
-from translate import translator
 import os
-from config import Config, message_types
-from telebot import types
+import random
 
+from telebot import types
+from translate import translator
+
+from config import Config, message_types
 
 config = Config()
 fact_ending = os.environ.get(config.env_fact_end, None)
@@ -23,7 +24,9 @@ def with_remove(bot):
                     print(f"Can't remove {body.chat.id} | {body.from_user.username}")
 
             return fn(*args, **kw)
+
         return wrapper
+
     return decorator_handler
 
 
@@ -51,22 +54,45 @@ def _is_fact_time(message):
     return message.date - config.period.last_fact_data > config.long_offset
 
 
+def _is_comapany_punch_time(message):
+    return message.date - config.period.last_fact_data > config.long_offset
+
+
+def _get_company_punch(message):
+    text = message.text.lower()
+
+    for company_key, company in config.company_triger.items():
+        if any([word in text for word in company['matches']]):
+            return company
+
+    return None
+
+
 def spot_answer_type(message):
     text = message.text.lower()
+    _detect_company = _get_company_punch(message)
+
     if text in config.skip_triger:
-        return message_types.skip
+        return message_types.skip, config.skip_mess
 
     elif config.fight_triger in text.split(' '):
-        return message_types.fight
+        return message_types.fight, config.fight_mess, True
+
+    elif _detect_company and _is_comapany_punch_time(message):
+        return message_types.company, _detect_company['punch'], True
 
     # logic only for special users
     elif message.from_user.username in config.users:
         if any([word in text for word in config.fact_triger]) and _is_fact_time(message):
-            return message_types.fact
+            return message_types.fact, get_fact(), True
 
-        return message_types.translate if _is_translate_time(message) else None
+        if _is_translate_time(message):
+            return message_types.translate, translate(message.text)
 
-    return message_types.punch if _is_punch_time(message) else None
+    if _is_punch_time(message):
+        return message_types.punch, random.choice(config.phrases)
+
+    return None, None
 
 
 def translate(text):
@@ -82,7 +108,7 @@ def get_fact():
     return f"{fact.capitalize()} (c) {fact_ending}"
 
 
-def reset_period(date):
+def reset_period(date, type):
     config.period.punch_count = config.period.translate_count = 0
     config.period.last_message_data = config.period.last_punch_data = date
 

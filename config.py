@@ -1,7 +1,7 @@
-from datetime import datetime as dt
 from collections import namedtuple
+from datetime import datetime as dt
 
-DELAY_TIME = 43200   # 12 hours
+DELAY_TIME = 43200  # 12 hours
 
 PHRASES = [
     'пернул мозгом',
@@ -51,8 +51,8 @@ HI_STICKERS = [
     'CAADAgADIwUAAmIxvRMwoI6RATWpZgI'
 ]
 
-message_types = namedtuple('MessageType', 'translate, punch, skip, fact, fight')(
-    'translate', 'punch', 'skip', 'fact', 'fight')
+message_types = namedtuple('MessageType', 'translate, punch, skip, fact, fight, company')(
+    'translate', 'punch', 'skip', 'fact', 'fight', 'company')
 
 
 class PeriodConfig:
@@ -74,13 +74,32 @@ class Config:
     lang_to = 'be'
     lang_from = 'ru'
 
-    offset = 300   # 5 min
+    offset = 300  # 5 min
     long_offset = DELAY_TIME
 
-    users = ('eromanovskyj', 'dm_melnikov')
+    users = ['eromanovskyj']
+    chat_id = ''
     skip_mess = 'Парни сори, я пас, сегодня я каблук'
     skip_triger = ('eromanovskyj-', 'пас', 'я пас')
     fact_triger = ('беларус', 'минск', 'лукашенк', 'картош', 'картоха', 'мiнск', 'минcк', 'минсk')
+    company_triger = {
+        'yandex': {
+            'matches': ['яндекс', 'yandex'],
+            'punch': 'Яндекс - хуяндекс'
+        },
+        'ingram': {
+            'matches': ['инграм', 'ingram'],
+            'punch': 'Инграм ебать копать микро'
+        },
+        'pandadoc': {
+            'matches': ['panda', 'пандадок', 'панде', 'pandadoc'],
+            'punch': 'Панда нахуй док'
+        },
+        'sber': {
+            'matches': ['сбере', 'сбертех', 'сбербанк', 'sber', 'домклик'],
+            'punch': 'Сбер - где карту открывали, туда и идите'
+        },
+    }
     fight_triger = 'бой'
     fight_mess = 'Мой хуй с твоей губой'
     pubg_mess = 'Ну что пасаны может катку в PUBG?'

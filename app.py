@@ -1,20 +1,20 @@
-import telebot
-import random
 import os
-from config import Config
+import random
 
+import telebot
+
+from config import Config
 from utils import (
     check_press_button_user,
     get_fact,
-    get_markup_pubg,
     message_types,
+    get_markup_pubg,
     reset_period,
     spot_answer_type,
     translate,
     update_text,
     with_remove,
 )
-
 
 config = Config()
 bot = telebot.TeleBot(os.environ.get(config.env_key, None))
@@ -87,32 +87,18 @@ def send_text(message):
     config.period.punch_count += 1
     config.period.translate_count += 1 if message.from_user.username in config.users else 0
 
-    type_ = spot_answer_type(message)
+    type, mess, *reply = spot_answer_type(message)
 
-    mess, replay_mess = None, None
-    if type_ == message_types.fact:
-        replay_mess = get_fact()
+    if type and mess:
+        reply = reply[0] if reply[0] else False
 
-    elif type_ == message_types.fight:
-        replay_mess = config.fight_mess
+        if reply:
+            bot.reply_to(message, mess)
+        else:
+            bot.send_message(message.chat.id, mess)
 
-    if replay_mess:
-        bot.reply_to(message, replay_mess)
-        reset_period(message.date)
-        return
-
-    if type_ == message_types.translate:
-        mess = translate(message.text)
-
-    elif type_ == message_types.punch:
-        mess = random.choice(config.phrases)
-
-    elif type_ == message_types.skip:
-        mess = config.skip_mess
-
-    if mess:
-        bot.send_message(message.chat.id, mess)
-        reset_period(message.date)
+        if type in [message_types.fact, message_types.punch, message_types.company]:
+            reset_period(message.date)
 
 
 if __name__ == "__main__":
