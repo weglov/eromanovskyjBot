@@ -84,6 +84,12 @@ def spot_answer_type(message):
         config.last_company_punch = _company_key
         return message_types.company, _company_items['punch'], True
 
+    elif all([
+        message.from_user.username not in config.users,
+        any([word in text.split(' ') for word in config.ping_trigger]),
+    ]):
+        return message_types.ping, config.ping_mess
+
     # logic only for special users
     elif message.from_user.username in config.users:
         if any([word in text for word in config.fact_triger]) and _is_fact_time(message):

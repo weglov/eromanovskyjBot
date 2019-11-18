@@ -51,8 +51,8 @@ HI_STICKERS = [
     'CAADAgADIwUAAmIxvRMwoI6RATWpZgI'
 ]
 
-message_types = namedtuple('MessageType', 'translate, punch, skip, fact, fight, company')(
-    'translate', 'punch', 'skip', 'fact', 'fight', 'company')
+message_types = namedtuple('MessageType', 'translate, punch, skip, fact, fight, ping, company')(
+    'translate', 'punch', 'skip', 'fact', 'fight', 'ping', 'company')
 
 
 class PeriodConfig:

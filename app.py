@@ -87,15 +87,15 @@ def send_text(message):
     config.period.punch_count += 1
     config.period.translate_count += 1 if message.from_user.username in config.users else 0
 
-    type, mess, *reply = spot_answer_type(message)
+    msg_type, msg_content, *reply = spot_answer_type(message)
 
-    if type and mess:
+    if msg_type and msg_content:
         reply = reply[0] if reply[0] else False
 
         if reply:
-            bot.reply_to(message, mess)
+            bot.reply_to(message, msg_content)
         else:
-            bot.send_message(message.chat.id, mess)
+            bot.send_message(message.chat.id, msg_content)
 
         if type in [message_types.fact, message_types.punch, message_types.company]:
             reset_period(message.date)
