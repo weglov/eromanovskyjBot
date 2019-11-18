@@ -70,38 +70,42 @@ def _get_company_punch(message):
     return None, None
 
 
-def spot_answer_type(message):
+def create_bot_msg(type=None, msg=None, reply=False):
+    return type, msg, reply
+
+
+def select_bot_answer(message):
     text = message.text.lower()
     _company_key, _company_items = _get_company_punch(message)
 
     if text in config.skip_triger:
-        return message_types.skip, config.skip_mess
+        return create_bot_msg(message_types.skip, config.skip_mess)
 
     elif config.fight_triger in text.split(' '):
-        return message_types.fight, config.fight_mess, True
+        return create_bot_msg(message_types.fight, config.fight_mess, reply=True)
 
     elif _company_key and _is_comapany_punch_time(message, _company_key):
         config.last_company_punch = _company_key
-        return message_types.company, _company_items['punch'], True
+        return create_bot_msg(message_types.company, _company_items['punch'], reply=True)
 
     elif all([
         message.from_user.username not in config.users,
         any([word in text.split(' ') for word in config.ping_trigger]),
     ]):
-        return message_types.ping, config.ping_mess
+        return create_bot_msg(message_types.ping, config.ping_mess)
 
     # logic only for special users
     elif message.from_user.username in config.users:
         if any([word in text for word in config.fact_triger]) and _is_fact_time(message):
-            return message_types.fact, get_fact(), True
+            return create_bot_msg(message_types.fact, get_fact(), True)
 
         if _is_translate_time(message):
-            return message_types.translate, translate(message.text)
+            return create_bot_msg(message_types.translate, translate(message.text))
 
     if _is_punch_time(message):
-        return message_types.punch, random.choice(config.phrases)
+        return create_bot_msg(message_types.punch, random.choice(config.phrases))
 
-    return None, None
+    return create_bot_msg()
 
 
 def translate(text):

@@ -48,11 +48,16 @@ FACTS = [
 HI_STICKERS = [
     'CAADAgAD-AADsJjjAzEWF6AJrFcFAg',
     'CAADAgADaQAD4aRlBU-4f77gfg6wAg',
-    'CAADAgADIwUAAmIxvRMwoI6RATWpZgI'
+    'CAADAgADIwUAAmIxvRMwoI6RATWpZgI',
+    'CAADAgADNAIAAktYbgHP4Ht_HqXtPhYE',
+    'CAADAgADHAAD9wLID3Acci1tkxh4FgQ',
+    'CAADAgADDAIAArD72wcH2k5H-BpS_BYE'
 ]
 
 message_types = namedtuple('MessageType', 'translate, punch, skip, fact, fight, ping, company')(
     'translate', 'punch', 'skip', 'fact', 'fight', 'ping', 'company')
+
+reset_period_type = [message_types.fact, message_types.punch, message_types.company]
 
 
 class PeriodConfig:
@@ -82,6 +87,10 @@ class Config:
     skip_mess = 'Парни сори, я пас, сегодня я каблук'
     skip_triger = ('eromanovskyj-', 'пас', 'я пас')
     fact_triger = ('беларус', 'минск', 'лукашенк', 'картош', 'картоха', 'мiнск', 'минcк', 'минсk')
+
+    ping_trigger = ('эд', 'эдос', 'эдик', 'эдуард')
+    ping_mess = '@eromanovskyj'
+
     last_company_punch = None
     company_triger = {
         'yandex': {

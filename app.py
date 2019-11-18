@@ -10,7 +10,7 @@ from utils import (
     message_types,
     get_markup_pubg,
     reset_period,
-    spot_answer_type,
+    select_bot_answer,
     translate,
     update_text,
     with_remove,
@@ -87,11 +87,9 @@ def send_text(message):
     config.period.punch_count += 1
     config.period.translate_count += 1 if message.from_user.username in config.users else 0
 
-    msg_type, msg_content, *reply = spot_answer_type(message)
+    msg_type, msg_content, reply = select_bot_answer(message)
 
-    if msg_type and msg_content:
-        reply = reply[0] if reply[0] else False
-
+    if msg_type:
         if reply:
             bot.reply_to(message, msg_content)
         else:
