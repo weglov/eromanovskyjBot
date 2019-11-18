@@ -57,7 +57,7 @@ HI_STICKERS = [
 message_types = namedtuple('MessageType', 'translate, punch, skip, fact, fight, ping, company')(
     'translate', 'punch', 'skip', 'fact', 'fight', 'ping', 'company')
 
-reset_period_type = [message_types.fact, message_types.punch, message_types.company]
+reset_period_types = [message_types.fact, message_types.punch, message_types.company]
 
 
 class PeriodConfig:
@@ -119,6 +119,8 @@ class Config:
         'no': ('пидор', 'белорус', 'каблук', 'лох', 'армянин', 'яндексоид'),
         'yes': ('белорус', 'армянин', 'яндексоид', 'красава', 'мужик', 'лучший'),
     }
+
+    reset_period_types = [message_types.fact, message_types.punch, message_types.company]
 
     users_count = 3
     press_button = {}

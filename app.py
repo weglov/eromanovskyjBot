@@ -95,7 +95,7 @@ def send_text(message):
         else:
             bot.send_message(message.chat.id, msg_content)
 
-        if msg_type in config.reset_period_type:
+        if msg_type in config.reset_period_types:
             reset_period(message.date)
 
 
