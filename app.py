@@ -89,13 +89,13 @@ def send_text(message):
 
     msg_type, msg_content, reply = select_bot_answer(message)
 
-    if msg_type:
+    if msg_type and msg_content:
         if reply:
             bot.reply_to(message, msg_content)
         else:
             bot.send_message(message.chat.id, msg_content)
 
-        if type in [message_types.fact, message_types.punch, message_types.company]:
+        if msg_type in config.reset_period_type:
             reset_period(message.date)
 
 
