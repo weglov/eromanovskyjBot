@@ -1,9 +1,10 @@
-import random
-from translate import translator
 import os
-from config import Config, message_types
-from telebot import types
+import random
 
+from telebot import types
+from translate import translator
+
+from config import Config, message_types
 
 config = Config()
 fact_ending = os.environ.get(config.env_fact_end, None)
@@ -23,7 +24,9 @@ def with_remove(bot):
                     print(f"Can't remove {body.chat.id} | {body.from_user.username}")
 
             return fn(*args, **kw)
+
         return wrapper
+
     return decorator_handler
 
 
@@ -51,28 +54,58 @@ def _is_fact_time(message):
     return message.date - config.period.last_fact_data > config.long_offset
 
 
-def spot_answer_type(message):
+def _is_comapany_punch_time(message, detect_company):
+    out_of_period = message.date - config.period.last_fact_data > config.long_offset
+
+    return config.last_company_punch != detect_company and out_of_period
+
+
+def _get_company_punch(message):
     text = message.text.lower()
+
+    for company_key, company in config.company_triger.items():
+        if any([word in text for word in company['matches']]):
+            return company_key, company
+
+    return None, None
+
+
+def create_bot_msg(type=None, msg=None, reply=False):
+    return type, msg, reply
+
+
+def select_bot_answer(message):
+    text = message.text.lower()
+    _company_key, _company_items = _get_company_punch(message)
+
     if text in config.skip_triger:
-        return message_types.skip
+        return create_bot_msg(message_types.skip, config.skip_mess)
 
     elif config.fight_triger in text.split(' '):
-        return message_types.fight
+        return create_bot_msg(message_types.fight, config.fight_mess, reply=True)
+
+    elif _company_key and _is_comapany_punch_time(message, _company_key):
+        config.last_company_punch = _company_key
+        return create_bot_msg(message_types.company, _company_items['punch'], reply=True)
 
     elif all([
         message.from_user.username not in config.users,
         any([word in text.split(' ') for word in config.ping_trigger]),
     ]):
-        return message_types.ping
+        return create_bot_msg(message_types.ping, config.ping_mess)
 
     # logic only for special users
     elif message.from_user.username in config.users:
         if any([word in text for word in config.fact_triger]) and _is_fact_time(message):
-            return message_types.fact
+            return create_bot_msg(message_types.fact, get_fact(), True)
 
-        return message_types.translate if _is_translate_time(message) else None
+        if _is_translate_time(message):
+            return create_bot_msg(message_types.translate, translate(message.text))
 
-    return message_types.punch if _is_punch_time(message) else None
+    if _is_punch_time(message):
+        return create_bot_msg(message_types.punch, random.choice(config.phrases))
+
+    return create_bot_msg()
 
 
 def translate(text):
