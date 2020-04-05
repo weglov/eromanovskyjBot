@@ -60,12 +60,14 @@ def pubg_poll_call(call):
 @bot.message_handler(content_types=['text'])
 def send_text(message):
     msg, bot_msg_type, v = message_turbine(message)
-    print(msg)
+
+    if not msg:
+        return
 
     if bot_msg_type == 'sticker':
         bot.send_sticker(message.chat.id, msg)
     elif bot_msg_type == 'reply':
-        bot.reply_to(message.chat.id, msg)
+        bot.reply_to(message, msg)
     else:
         bot.send_message(message.chat.id, msg)
 

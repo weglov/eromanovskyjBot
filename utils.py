@@ -1,6 +1,6 @@
+import os
 import random
 from translate import translator
-import os
 from config import Config
 from telebot import types
 
@@ -23,7 +23,9 @@ def with_remove(bot):
                     print(f"Can't remove {body.chat.id} | {body.from_user.username}")
 
             return fn(*args, **kw)
+
         return wrapper
+
     return decorator_handler
 
 

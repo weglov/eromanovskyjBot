@@ -131,7 +131,7 @@ messages: Dict[MessagesType, Trigger] = {
         chance=100,
         command='debug',
         condition=[only_manually(), only_user(['scheglov'])],
-        text=lambda x: str(TURBINE),
+        text=lambda x: '{}'.format(json.dumps(TURBINE)),
         bot_type='reply'
     ),
 }
@@ -139,10 +139,10 @@ messages: Dict[MessagesType, Trigger] = {
 
 def message_turbine(msg):
     for key in messages:
-        TURBINE[key] = messages[key].on(msg)
+        TURBINE[str(key)] = messages[key].on(msg)
 
     for m in TURBINE:
         if TURBINE[m][0]:
             return TURBINE[m]
 
-
+    return None, '', ''

@@ -43,19 +43,16 @@ FACTS = [
 HI_STICKERS = [
     'CAADAgAD-AADsJjjAzEWF6AJrFcFAg',
     'CAADAgADaQAD4aRlBU-4f77gfg6wAg',
-    'CAADAgADIwUAAmIxvRMwoI6RATWpZgI'
+    'CAADAgADIwUAAmIxvRMwoI6RATWpZgI',
+    'CAADAgADNAIAAktYbgHP4Ht_HqXtPhYE',
+    'CAADAgADHAAD9wLID3Acci1tkxh4FgQ',
+    'CAADAgADDAIAArD72wcH2k5H-BpS_BYE'
 ]
 
 
 class Config:
     env_key = 'TELE_KEY'
     env_fact_end = 'FACT_KEY'
-    timers = {
-        'DAY': 1440,
-        '2DAYS': 2880,
-        '3DAYS': 4320,
-        'WEEK': 10080
-    }
 
     lang_to = 'be'
     lang_from = 'ru'
