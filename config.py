@@ -1,8 +1,3 @@
-from datetime import datetime as dt
-from collections import namedtuple
-
-DELAY_TIME = 43200   # 12 hours
-
 PHRASES = [
     'пернул мозгом',
     'да, ништяк',
@@ -51,45 +46,22 @@ HI_STICKERS = [
     'CAADAgADIwUAAmIxvRMwoI6RATWpZgI'
 ]
 
-message_types = namedtuple('MessageType', 'translate, punch, skip, fact, fight, ping')(
-    'translate', 'punch', 'skip', 'fact', 'fight', 'ping')
-
-
-class PeriodConfig:
-    translate_period = 5
-    translate_count = 0
-    last_message_data = dt.now().timestamp()
-
-    punch_period = 10
-    punch_count = 0
-    last_punch_data = dt.now().timestamp()
-
-    last_fact_data = dt.now().timestamp() - DELAY_TIME
-
 
 class Config:
     env_key = 'TELE_KEY'
     env_fact_end = 'FACT_KEY'
+    timers = {
+        'DAY': 1440,
+        '2DAYS': 2880,
+        '3DAYS': 4320,
+        'WEEK': 10080
+    }
 
     lang_to = 'be'
     lang_from = 'ru'
 
-    offset = 300   # 5 min
-    long_offset = DELAY_TIME
-
-    users = ('eromanovskyj', 'dm_melnikov')
-    skip_mess = 'Парни сори, я пас, сегодня я каблук'
-    skip_triger = ('eromanovskyj-', 'пас', 'я пас')
-    fact_triger = ('беларус', 'минск', 'лукашенк', 'картош', 'картоха', 'мiнск', 'минcк', 'минсk')
-
-    fight_triger = 'бой'
-    fight_mess = 'Мой хуй с твоей губой'
-
     pubg_mess = 'Ну что пасаны может катку в PUBG?'
     message_length = 15
-
-    ping_trigger = ('эд', 'эдос', 'эдик', 'эдуард')
-    ping_mess = '@eromanovskyj'
 
     because_i_am = {
         'no': ('пидор', 'белорус', 'каблук', 'лох', 'армянин', 'яндексоид'),
@@ -99,7 +71,6 @@ class Config:
     users_count = 3
     press_button = {}
 
-    period = PeriodConfig
     stickers = HI_STICKERS
     phrases = PHRASES
     facts = FACTS
