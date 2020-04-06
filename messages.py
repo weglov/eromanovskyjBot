@@ -11,7 +11,6 @@ from utils import (
     translate,
 )
 
-TURBINE = {}
 config = Config()
 
 
@@ -61,6 +60,15 @@ def only_manually():
     return wrapper
 
 
+def debug():
+    debug_dict = {}
+
+    for m in messages:
+        debug_dict[str(m)] = messages[m].debug()
+
+    return '{}'.format(json.dumps(debug_dict)),
+
+
 class MessagesType(Enum):
     PUNCH = 'punch'
     TRANSLATE = 'translate'
@@ -78,7 +86,7 @@ messages: Dict[MessagesType, Trigger] = {
         chance=20,
         command='punch',
         condition=[timer_minutes(2880), only_user(['eromanoskij'])],
-        text=lambda x: random.choice(config.phrases),
+        text=lambda: random.choice(config.phrases),
         bot_type='reply'
     ),
     MessagesType.FACT: Trigger(
@@ -94,8 +102,8 @@ messages: Dict[MessagesType, Trigger] = {
     ),
     MessagesType.FIGHT: Trigger(
         chance=50,
-        condition=[timer_minutes(1440), text_contains(['бой'])],
-        text='Мой хуй с твоей губой',
+        condition=[timer_minutes(1400), text_contains(['бой'])],
+        text=lambda: 'Мой хуй с твоей губой',
         bot_type='reply'
     ),
     MessagesType.TRANSLATE: Trigger(
@@ -118,7 +126,7 @@ messages: Dict[MessagesType, Trigger] = {
         chance=100,
         command='sayhialbert',
         condition=[only_manually(), only_user(['eromanoskij', 'scheglov'])],
-        text=lambda x: random.choice(config.stickers),
+        text=lambda: random.choice(config.stickers),
         bot_type='sticker'
     ),
     MessagesType.COMPANY: Trigger(
@@ -131,18 +139,16 @@ messages: Dict[MessagesType, Trigger] = {
         chance=100,
         command='debug',
         condition=[only_manually(), only_user(['scheglov'])],
-        text=lambda x: '{}'.format(json.dumps(TURBINE)),
+        text=debug,
         bot_type='reply'
     ),
 }
 
-
 def message_turbine(msg):
     for key in messages:
-        TURBINE[str(key)] = messages[key].on(msg)
+        res = messages[key].on(msg)
 
-    for m in TURBINE:
-        if TURBINE[m][0]:
-            return TURBINE[m]
+        if res:
+            return res
 
-    return None, '', ''
+    return None

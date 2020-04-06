@@ -1,6 +1,8 @@
 import random
 from typing_extensions import Literal
 from typing import List, Any, Dict, Union, Tuple, Optional, Callable
+from datetime import datetime as dt
+from inspect import signature
 import types
 
 
@@ -21,10 +23,24 @@ class Trigger:
         self.text = text
         self.status = [False for i in condition]
         self.type = bot_type
+        self.last_trigger = None
+
+    def debug(self):
+        return {
+            'chance': self.current_chance,
+            'status': self.status,
+            'last_trigger': self.last_trigger
+        }
+
 
     def get_message(self, msg):
         if isinstance(self.text, types.FunctionType):
-            return self.text(msg)
+            sig = signature(self.text)
+
+            if len(sig.parameters):
+                return self.text(msg)
+            else:
+                return self.text()
 
         return self.text
 
@@ -56,7 +72,8 @@ class Trigger:
 
     def on(self, msg):
         if self.is_command(msg) or self.check_condition(msg):
-            return self.get_message(msg.text), self.type, self.current_chance
+            self.last_trigger = dt.now().strftime('%Y-%m-%d-%H.%M.%S')
+            return self
 
-        return None, self.type, self.current_chance
+        return None
 
