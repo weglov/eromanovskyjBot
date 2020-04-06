@@ -129,12 +129,6 @@ messages: Dict[MessagesType, Trigger] = {
         text=lambda: random.choice(config.stickers),
         bot_type='sticker'
     ),
-    MessagesType.COMPANY: Trigger(
-        chance=30,
-        condition=[timer_minutes(1400), text_contains(['пас'])],
-        text='Парни сори, я пас, сегодня я каблук',
-        bot_type='reply'
-    ),
     MessagesType.DEBUG: Trigger(
         chance=100,
         command='debug',

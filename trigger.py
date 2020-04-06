@@ -54,9 +54,9 @@ class Trigger:
 
         if all(x for x in self.status):
             rand = random.randrange(0, 100)
-            print(rand, self.current_chance, self.status)
 
             if rand <= self.current_chance:
+                self.reset()
                 return True
             else:
                 self.current_chance = self.current_chance + self.chance_step
