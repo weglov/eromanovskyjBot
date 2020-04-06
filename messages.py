@@ -1,11 +1,11 @@
-import random
-from config import Config
 import json
+import random
 from datetime import datetime as dt
-from typing import List, Dict
 from enum import Enum
-from trigger import Trigger
+from typing import List, Dict
 
+from config import Config
+from trigger import Trigger
 from utils import (
     get_fact,
     translate,
@@ -143,6 +143,7 @@ messages: Dict[MessagesType, Trigger] = {
         bot_type='reply'
     ),
 }
+
 
 def message_turbine(msg):
     for key in messages:

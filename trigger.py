@@ -1,9 +1,10 @@
 import random
-from typing_extensions import Literal
-from typing import List, Any, Dict, Union, Tuple, Optional, Callable
+import types
 from datetime import datetime as dt
 from inspect import signature
-import types
+from typing import List, Any, Union, Optional, Callable
+
+from typing_extensions import Literal
 
 
 class Trigger:
@@ -31,7 +32,6 @@ class Trigger:
             'status': self.status,
             'last_trigger': self.last_trigger
         }
-
 
     def get_message(self, msg):
         if isinstance(self.text, types.FunctionType):
@@ -76,4 +76,3 @@ class Trigger:
             return self
 
         return None
-

@@ -1,8 +1,9 @@
-import telebot
 import os
+
+import telebot
+
 from config import Config
 from messages import message_turbine
-
 from utils import (
     check_press_button_user,
     get_markup_pubg,
@@ -10,7 +11,6 @@ from utils import (
     update_text,
     with_remove,
 )
-
 
 config = Config()
 bot = telebot.TeleBot(os.environ.get(config.env_key, None))

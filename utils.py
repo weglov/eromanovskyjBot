@@ -1,9 +1,10 @@
 import os
 import random
-from translate import translator
-from config import Config
-from telebot import types
 
+from telebot import types
+from translate import translator
+
+from config import Config
 
 config = Config()
 fact_ending = os.environ.get(config.env_fact_end, None)
