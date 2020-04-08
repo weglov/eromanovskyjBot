@@ -2,7 +2,7 @@ import random
 import types
 from datetime import datetime as dt
 from inspect import signature
-from typing import List, Any, Union, Optional, Callable
+from typing import List, Any, Dict, Union, Optional, Callable
 
 from typing_extensions import Literal
 
@@ -26,14 +26,14 @@ class Trigger:
         self.type = bot_type
         self.last_trigger = None
 
-    def debug(self):
+    def debug(self) -> Dict:
         return {
             'chance': self.current_chance,
             'status': self.status,
             'last_trigger': self.last_trigger
         }
 
-    def get_message(self, msg):
+    def get_message(self, msg) -> str:
         if isinstance(self.text, types.FunctionType):
             sig = signature(self.text)
 
@@ -44,7 +44,7 @@ class Trigger:
 
         return self.text
 
-    def reset(self):
+    def reset(self) -> None:
         self.status = [False for i in self.condition]
         self.current_chance = self.chance
 
@@ -64,7 +64,7 @@ class Trigger:
 
         return False
 
-    def is_command(self, msg):
+    def is_command(self, msg) -> bool:
         if self.command:
             return msg.text.lower().startswith('/{}'.format(self.command))
 

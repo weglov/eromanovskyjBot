@@ -2,7 +2,7 @@ import json
 import random
 from datetime import datetime as dt
 from enum import Enum
-from typing import List, Dict
+from typing import List, Dict, Callable
 
 from config import Config
 from trigger import Trigger
@@ -32,28 +32,28 @@ def timer_minutes(minutes: int = 1440):
     return wrapper
 
 
-def only_user(users: List[str]):
+def only_user(users: List[str]) -> Callable:
     def wrapper(msg):
         return msg.from_user.username in users
 
     return wrapper
 
 
-def text_contains(words: List[str]):
+def text_contains(words: List[str]) -> Callable:
     def wrapper(msg):
         return any([word in msg.text.lower() for word in words])
 
     return wrapper
 
 
-def message_more(length: int):
+def message_more(length: int) -> Callable:
     def wrapper(msg):
         return all([len(msg.text.lower()) > length, not msg.text.startswith('http')])
 
     return wrapper
 
 
-def only_manually():
+def only_manually() -> Callable:
     def wrapper(*args):
         return False
 
@@ -140,10 +140,9 @@ messages: Dict[MessagesType, Trigger] = {
 
 
 def message_turbine(msg):
-    for key in messages:
-        res = messages[key].on(msg)
+    sorted_by_chance = sorted(messages.items(), key=lambda item: item[1].current_chance, reverse=True)
 
-        if res:
-            return res
+    for (_, trigger) in sorted_by_chance:
+        return trigger.on(msg)
 
     return None
