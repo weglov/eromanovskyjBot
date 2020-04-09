@@ -1,8 +1,3 @@
-from collections import namedtuple
-from datetime import datetime as dt
-
-DELAY_TIME = 43200  # 12 hours
-
 PHRASES = [
     'пернул мозгом',
     'да, ништяк',
@@ -54,23 +49,6 @@ HI_STICKERS = [
     'CAADAgADDAIAArD72wcH2k5H-BpS_BYE'
 ]
 
-message_types = namedtuple('MessageType', 'translate, punch, skip, fact, fight, ping, company')(
-    'translate', 'punch', 'skip', 'fact', 'fight', 'ping', 'company')
-
-reset_period_types = [message_types.fact, message_types.punch, message_types.company]
-
-
-class PeriodConfig:
-    translate_period = 5
-    translate_count = 0
-    last_message_data = dt.now().timestamp()
-
-    punch_period = 10
-    punch_count = 0
-    last_punch_data = dt.now().timestamp()
-
-    last_fact_data = dt.now().timestamp() - DELAY_TIME
-
 
 class Config:
     env_key = 'TELE_KEY'
@@ -79,39 +57,6 @@ class Config:
     lang_to = 'be'
     lang_from = 'ru'
 
-    offset = 300  # 5 min
-    long_offset = DELAY_TIME
-
-    users = ['eromanovskyj']
-    chat_id = ''
-    skip_mess = 'Парни сори, я пас, сегодня я каблук'
-    skip_triger = ('eromanovskyj-', 'пас', 'я пас')
-    fact_triger = ('беларус', 'минск', 'лукашенк', 'картош', 'картоха', 'мiнск', 'минcк', 'минсk')
-
-    ping_trigger = ('эд', 'эдос', 'эдик', 'эдуард')
-    ping_mess = '@eromanovskyj'
-
-    last_company_punch = None
-    company_triger = {
-        'yandex': {
-            'matches': ['яндекс', 'yandex'],
-            'punch': 'Яндекс - хуяндекс'
-        },
-        'ingram': {
-            'matches': ['инграм', 'ingram'],
-            'punch': 'Инграм ебать копать микро'
-        },
-        'pandadoc': {
-            'matches': ['panda', 'пандадок', 'панде', 'pandadoc'],
-            'punch': 'Панда нахуй док'
-        },
-        'sber': {
-            'matches': ['сбере', 'сбертех', 'сбербанк', 'sber', 'домклик', 'сбера'],
-            'punch': 'Сбер - где карту открывали, туда и идите'
-        },
-    }
-    fight_triger = 'бой'
-    fight_mess = 'Мой хуй с твоей губой'
     pubg_mess = 'Ну что пасаны может катку в PUBG?'
     message_length = 15
 
@@ -120,12 +65,9 @@ class Config:
         'yes': ('белорус', 'армянин', 'яндексоид', 'красава', 'мужик', 'лучший'),
     }
 
-    reset_period_types = [message_types.fact, message_types.punch, message_types.company]
-
     users_count = 3
     press_button = {}
 
-    period = PeriodConfig
     stickers = HI_STICKERS
     phrases = PHRASES
     facts = FACTS

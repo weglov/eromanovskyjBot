@@ -1,16 +1,12 @@
 import os
-import random
 
 import telebot
 
 from config import Config
+from messages import message_turbine
 from utils import (
     check_press_button_user,
-    get_fact,
-    message_types,
     get_markup_pubg,
-    reset_period,
-    select_bot_answer,
     translate,
     update_text,
     with_remove,
@@ -18,27 +14,6 @@ from utils import (
 
 config = Config()
 bot = telebot.TeleBot(os.environ.get(config.env_key, None))
-
-
-@bot.message_handler(commands=['punch'])
-@with_remove(bot)
-def send_punch(message):
-    phrase = random.choice(config.phrases).capitalize()
-    bot.send_message(message.chat.id, phrase)
-
-
-@bot.message_handler(commands=['sayhialbert'])
-@with_remove(bot)
-def send_hi(message):
-    sticker = random.choice(config.stickers)
-    bot.send_sticker(message.chat.id, sticker)
-
-
-@bot.message_handler(commands=['fact'])
-@with_remove(bot)
-def send_fact(message):
-    fact = get_fact()
-    bot.send_message(message.chat.id, fact)
 
 
 @bot.message_handler(commands=['pubg'])
@@ -84,19 +59,17 @@ def pubg_poll_call(call):
 
 @bot.message_handler(content_types=['text'])
 def send_text(message):
-    config.period.punch_count += 1
-    config.period.translate_count += 1 if message.from_user.username in config.users else 0
+    bot_msg = message_turbine(message)
 
-    msg_type, msg_content, reply = select_bot_answer(message)
+    if bot_msg:
+        msg = bot_msg.get_message(message.text)
 
-    if msg_type and msg_content:
-        if reply:
-            bot.reply_to(message, msg_content)
+        if bot_msg.type == 'sticker':
+            bot.send_sticker(message.chat.id, msg)
+        elif bot_msg.type == 'reply':
+            bot.reply_to(message, msg)
         else:
-            bot.send_message(message.chat.id, msg_content)
-
-        if msg_type in config.reset_period_types:
-            reset_period(message.date)
+            bot.send_message(message.chat.id, msg)
 
 
 if __name__ == "__main__":
