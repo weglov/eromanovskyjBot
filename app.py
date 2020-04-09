@@ -17,7 +17,6 @@ bot = telebot.TeleBot(os.environ.get(config.env_key, None))
 
 
 @bot.message_handler(commands=['pubg'])
-@with_remove(bot)
 def send_pubg_request(message):
     if message.chat.type == 'private':
         return
