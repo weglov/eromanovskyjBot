@@ -143,6 +143,9 @@ def message_turbine(msg):
     sorted_by_chance = sorted(messages.items(), key=lambda item: item[1].current_chance, reverse=True)
 
     for (_, trigger) in sorted_by_chance:
-        return trigger.on(msg)
+        trigger_msg = trigger.on(msg)
+
+        if trigger_msg:
+            return trigger_msg
 
     return None

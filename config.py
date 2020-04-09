@@ -65,6 +65,8 @@ class Config:
         'yes': ('белорус', 'армянин', 'яндексоид', 'красава', 'мужик', 'лучший'),
     }
 
+    users = ['eromanovskyj']
+
     users_count = 3
     press_button = {}
 
