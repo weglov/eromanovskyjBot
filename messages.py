@@ -19,9 +19,9 @@ def timer_minutes(minutes: int = 1440):
 
     def wrapper(msg):
         nonlocal recent_time
-        print('closure:', recent_time, 'msg', msg.date, msg.date - recent_time, minutes * 60)
-
         is_spend_time = msg.date - recent_time
+        print('closure:', recent_time, 'msg', msg.date, is_spend_time > minutes * 60)
+
 
         if is_spend_time > minutes * 60:
             recent_time = msg.date
@@ -102,7 +102,7 @@ messages: Dict[MessagesType, Trigger] = {
         bot_type='reply'
     ),
     MessagesType.FIGHT: Trigger(
-        chance=50,
+        chance=100,
         condition=[timer_minutes(1440), text_contains(['бой'])],
         text=lambda: 'Мой хуй с твоей губой',
         bot_type='reply'
