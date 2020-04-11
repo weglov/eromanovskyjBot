@@ -84,56 +84,62 @@ class MessagesType(Enum):
 
 messages: Dict[MessagesType, Trigger] = {
     MessagesType.PUNCH: Trigger(
-        chance=20,
+        chance=50,
         command='punch',
-        condition=[timer_minutes(2880), only_user(['eromanoskij'])],
+        condition=[
+            only_user(['eromanoskij']),
+            timer_minutes(2880)
+        ],
         text=lambda: random.choice(config.phrases),
         bot_type='reply'
     ),
     MessagesType.FACT: Trigger(
-        chance=20,
+        chance=50,
         command='fact',
         condition=[
+            only_user(['eromanoskij']),
             text_contains(['беларус', 'минск', 'лукашенк', 'картош', 'картоха', 'мiнск', 'минcк', 'минсk']),
             timer_minutes(1440),
-            only_user(['eromanoskij'])
         ],
         text=get_fact,
         bot_type='reply'
     ),
     MessagesType.FIGHT: Trigger(
         chance=100,
-        condition=[timer_minutes(1440), text_contains(['бой'])],
+        condition=[
+            text_contains(['бой']),
+            timer_minutes(1440),
+        ],
         text=lambda: 'Мой хуй с твоей губой',
         bot_type='reply'
     ),
     MessagesType.TRANSLATE: Trigger(
         chance=50,
         condition=[
-            timer_minutes(2880),
-            message_more(100),
             only_user(['eromanoskij']),
+            message_more(100),
+            timer_minutes(2880),
         ],
         text=translate,
         bot_type='reply'
     ),
     MessagesType.SKIP: Trigger(
         chance=100,
-        condition=[timer_minutes(2880), text_contains(['пас'])],
+        condition=[text_contains(['пас']), timer_minutes(2880)],
         text='Парни сори, я пас, сегодня я каблук',
         bot_type='reply'
     ),
     MessagesType.SAY_HI: Trigger(
         chance=100,
         command='sayhialbert',
-        condition=[only_manually(), only_user(['eromanoskij', 'scheglov'])],
+        condition=[only_user(['eromanoskij', 'scheglov']), only_manually()],
         text=lambda: random.choice(config.stickers),
         bot_type='sticker'
     ),
     MessagesType.DEBUG: Trigger(
         chance=100,
         command='debug',
-        condition=[only_manually(), only_user(['scheglov'])],
+        condition=[only_user(['scheglov']), only_manually()],
         text=debug,
         bot_type='reply'
     ),

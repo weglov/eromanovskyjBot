@@ -51,6 +51,8 @@ class Trigger:
     def check_condition(self, msg):
         for key, cond in enumerate(self.condition):
             self.status[key] = cond(msg)
+            if not self.status[key]:
+                return False
 
         if all(x for x in self.status):
             rand = random.randrange(0, 100)
