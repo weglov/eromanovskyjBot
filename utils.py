@@ -15,7 +15,7 @@ def with_remove(bot):
         def wrapper(*args, **kw):
             body = args[0]
 
-            if '-d' in body.text and body.text.startswith('/'):
+            if "-d" in body.text and body.text.startswith("/"):
                 print(f"Triggering remove: {body.text} | {body.from_user.username}")
 
                 try:
@@ -46,7 +46,7 @@ def get_fact():
 def check_press_button_user(call):
     chat_id = call.message.chat.id
 
-    press_users = config.press_button[chat_id]['users']
+    press_users = config.press_button[chat_id]["users"]
     if call.from_user.username in press_users:
         return True, False
 
@@ -60,8 +60,8 @@ def get_markup_pubg():
     markup = types.InlineKeyboardMarkup()
 
     row = [
-        types.InlineKeyboardButton('Да', callback_data='yes'),
-        types.InlineKeyboardButton('Нет', callback_data='no'),
+        types.InlineKeyboardButton("Да", callback_data="yes"),
+        types.InlineKeyboardButton("Нет", callback_data="no"),
     ]
 
     markup.row(*row)
@@ -69,8 +69,11 @@ def get_markup_pubg():
 
 
 def update_text(call):
-    text = call.message.text + '\n\n'
+    text = call.message.text + "\n\n"
     user = call.from_user.first_name or "@" + call.from_user.username
     because = random.choice(config.because_i_am[call.data])
 
-    return text + f"{user}: Я {'пас' if call.data == 'no' else 'за'} потому что я {because}"
+    return (
+        text
+        + f"{user}: Я {'пас' if call.data == 'no' else 'за'} потому что я {because}"
+    )

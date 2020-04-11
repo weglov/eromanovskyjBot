@@ -8,14 +8,15 @@ from typing_extensions import Literal
 
 
 class Trigger:
-    def __init__(self,
-                 chance: int,
-                 condition: List[Callable],
-                 text: Union[Callable[[str], Any], str],
-                 chance_step: int = 10,
-                 command: Optional[str] = None,
-                 bot_type: Optional[Literal['instant', 'reply', 'sticker']] = 'instant',
-                 ) -> None:
+    def __init__(
+        self,
+        chance: int,
+        condition: List[Callable],
+        text: Union[Callable[[str], Any], str],
+        chance_step: int = 10,
+        command: Optional[str] = None,
+        bot_type: Optional[Literal["instant", "reply", "sticker"]] = "instant",
+    ) -> None:
         self.chance = chance
         self.command = command
         self.chance_step = chance_step
@@ -28,9 +29,9 @@ class Trigger:
 
     def debug(self) -> Dict:
         return {
-            'chance': self.current_chance,
-            'status': self.status,
-            'last_trigger': self.last_trigger
+            "chance": self.current_chance,
+            "status": self.status,
+            "last_trigger": self.last_trigger,
         }
 
     def get_message(self, msg) -> str:
@@ -68,13 +69,13 @@ class Trigger:
 
     def is_command(self, msg) -> bool:
         if self.command:
-            return msg.text.lower().startswith('/{}'.format(self.command))
+            return msg.text.lower().startswith("/{}".format(self.command))
 
         return False
 
     def on(self, msg):
         if self.is_command(msg) or self.check_condition(msg):
-            self.last_trigger = dt.now().strftime('%Y-%m-%d-%H.%M.%S')
+            self.last_trigger = dt.now().strftime("%Y-%m-%d-%H.%M.%S")
             return self
 
         return None
