@@ -15,10 +15,11 @@ config = Config()
 
 
 def timer_minutes(minutes: int = 1440):
-    recent_time = dt.now().timestamp()
+    recent_time = int(dt.now().timestamp() - minutes * 60)
 
     def wrapper(msg):
         nonlocal recent_time
+        print('closure:', recent_time, 'msg', msg.date, msg.date - recent_time, minutes * 60)
 
         is_spend_time = msg.date - recent_time
 
@@ -94,7 +95,7 @@ messages: Dict[MessagesType, Trigger] = {
         command='fact',
         condition=[
             text_contains(['беларус', 'минск', 'лукашенк', 'картош', 'картоха', 'мiнск', 'минcк', 'минсk']),
-            timer_minutes(2880),
+            timer_minutes(1440),
             only_user(['eromanoskij'])
         ],
         text=get_fact,
@@ -102,7 +103,7 @@ messages: Dict[MessagesType, Trigger] = {
     ),
     MessagesType.FIGHT: Trigger(
         chance=50,
-        condition=[timer_minutes(1400), text_contains(['бой'])],
+        condition=[timer_minutes(1440), text_contains(['бой'])],
         text=lambda: 'Мой хуй с твоей губой',
         bot_type='reply'
     ),
