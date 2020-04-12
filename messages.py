@@ -85,7 +85,7 @@ messages: Dict[MessagesType, Trigger] = {
     MessagesType.PUNCH: Trigger(
         chance=50,
         command="punch",
-        condition=[only_user(["eromanoskij"]), timer_minutes(2880)],
+        condition=[only_user(["eromanovskyj"]), timer_minutes(2880)],
         text=lambda: random.choice(config.phrases),
         bot_type="reply",
     ),
@@ -93,7 +93,7 @@ messages: Dict[MessagesType, Trigger] = {
         chance=50,
         command="fact",
         condition=[
-            only_user(["eromanoskij"]),
+            only_user(["eromanovskyj"]),
             text_contains(
                 [
                     "беларус",
@@ -119,7 +119,7 @@ messages: Dict[MessagesType, Trigger] = {
     ),
     MessagesType.TRANSLATE: Trigger(
         chance=50,
-        condition=[only_user(["eromanoskij"]), message_more(100), timer_minutes(2880),],
+        condition=[only_user(["eromanovskyj"]), message_more(100), timer_minutes(2880),],
         text=translate,
         bot_type="reply",
     ),
@@ -132,7 +132,7 @@ messages: Dict[MessagesType, Trigger] = {
     MessagesType.SAY_HI: Trigger(
         chance=100,
         command="sayhialbert",
-        condition=[only_user(["eromanoskij", "scheglov"]), only_manually()],
+        condition=[only_user(["eromanovskyj", "scheglov"]), only_manually()],
         text=lambda: random.choice(config.stickers),
         bot_type="sticker",
     ),
