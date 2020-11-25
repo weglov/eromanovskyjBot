@@ -20,7 +20,8 @@ def timer_minutes(minutes: int = 1440):
     def wrapper(msg):
         nonlocal recent_time
         is_spend_time = msg.date - recent_time
-        print("closure:", recent_time, "msg", msg.date, is_spend_time > minutes * 60)
+        print("closure:", recent_time, "msg",
+              msg.date, is_spend_time > minutes * 60)
 
         if is_spend_time > minutes * 60:
             recent_time = msg.date
@@ -42,6 +43,13 @@ def only_user(users: List[str]) -> Callable:
 def text_contains(words: List[str]) -> Callable:
     def wrapper(msg):
         return any([word in msg.text.lower() for word in words])
+
+    return wrapper
+
+
+def text_word_include(words: List[str]) -> Callable:
+    def wrapper(msg):
+        return any([word in msg.text.lower().split() for word in words])
 
     return wrapper
 
@@ -113,19 +121,20 @@ messages: Dict[MessagesType, Trigger] = {
     ),
     MessagesType.FIGHT: Trigger(
         chance=100,
-        condition=[text_contains(["бой"]), timer_minutes(1440),],
+        condition=[text_word_include(["бой"]), timer_minutes(1440), ],
         text=lambda: "Мой хуй с твоей губой",
         bot_type="reply",
     ),
     MessagesType.TRANSLATE: Trigger(
         chance=50,
-        condition=[only_user(["eromanovskyj"]), message_more(100), timer_minutes(2880),],
+        condition=[only_user(["eromanovskyj"]), message_more(
+            100), timer_minutes(2880), ],
         text=translate,
         bot_type="reply",
     ),
     MessagesType.SKIP: Trigger(
         chance=100,
-        condition=[text_contains(["пас"]), timer_minutes(2880)],
+        condition=[text_word_include(["пас"]), timer_minutes(2880)],
         text="Парни сори, я пас, сегодня я каблук",
         bot_type="reply",
     ),
