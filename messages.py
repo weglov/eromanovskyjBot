@@ -91,14 +91,14 @@ class MessagesType(Enum):
 
 messages: Dict[MessagesType, Trigger] = {
     MessagesType.PUNCH: Trigger(
-        chance=50,
+        chance=10,
         command="punch",
         condition=[only_user(["eromanovskyj"]), timer_minutes(2880)],
         text=lambda: random.choice(config.phrases),
         bot_type="reply",
     ),
     MessagesType.FACT: Trigger(
-        chance=50,
+        chance=10,
         command="fact",
         condition=[
             only_user(["eromanovskyj"]),
@@ -120,36 +120,42 @@ messages: Dict[MessagesType, Trigger] = {
         bot_type="reply",
     ),
     MessagesType.FIGHT: Trigger(
-        chance=100,
+        chance=30,
         condition=[text_word_include(["бой"]), timer_minutes(1440), ],
         text=lambda: "Мой хуй с твоей губой",
         bot_type="reply",
     ),
     MessagesType.TRANSLATE: Trigger(
-        chance=50,
+        chance=30,
         condition=[only_user(["eromanovskyj"]), message_more(
             100), timer_minutes(2880), ],
         text=translate,
         bot_type="reply",
     ),
     MessagesType.SKIP: Trigger(
-        chance=100,
+        chance=30,
         condition=[text_word_include(["пас"]), timer_minutes(2880)],
         text="Парни сори, я пас, сегодня я каблук",
         bot_type="reply",
     ),
     MessagesType.SAY_HI: Trigger(
-        chance=100,
+        chance=30,
         command="sayhialbert",
         condition=[only_user(["eromanovskyj", "scheglov"]), only_manually()],
         text=lambda: random.choice(config.stickers),
         bot_type="sticker",
     ),
     MessagesType.DEBUG: Trigger(
-        chance=100,
+        chance=30,
         command="debug",
         condition=[only_user(["scheglov"]), only_manually()],
         text=debug,
+        bot_type="reply",
+    ),
+    MessagesType.FIGHT: Trigger(
+        chance=100,
+        condition=[text_contains(["лебедев"]), timer_minutes(1440), ],
+        text=lambda: "Хочу напомнить если забыли: Лебедев - петушара",
         bot_type="reply",
     ),
 }
