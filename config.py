@@ -54,7 +54,7 @@ class Config:
     env_key = "TELE_KEY"
     env_fact_end = "FACT_KEY"
 
-    lang_to = "be"
+    lang_to = "pt"
     lang_from = "ru"
 
     pubg_mess = "Ну что пасаны может катку в PUBG?"
